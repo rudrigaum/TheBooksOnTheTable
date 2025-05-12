@@ -1,0 +1,29 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserdata/
+*.xcuserstate
+*.xcodeproj/project.xcworkspace/xcuserdata
+
+# SwiftPM
+.swiftpm/
+.build/
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/
+
+# Fastlane
+fastlane/report.xml
+fastlane/screenshots
+fastlane/test_output
+
+# Arquivos do sistema
+.DS_Store
+*.log
+
+# Arquivos temporários
+*.swp
+*.lock
