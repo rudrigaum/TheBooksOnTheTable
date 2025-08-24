@@ -17,7 +17,7 @@ class BookSearchCoordinator: Coordinator {
     }
 
     func start() {
-        let viewModel = BookSearchViewModel()
+        let viewModel = BookSearchViewModel(apiService: APIManager())
         let viewController = BookSearchViewController(viewModel: viewModel, coordinator: self)
         navigationController.pushViewController(viewController, animated: true)
     }

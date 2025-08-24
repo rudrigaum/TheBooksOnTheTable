@@ -15,7 +15,7 @@ enum APIError: Error {
     case apiFailed(statusCode: Int, message: String?)
 }
 
-class APIManager {
+class APIManager: APIService {
     static let shared = APIManager()
     private let baseURL = "https://www.googleapis.com/books/v1/"
     private let apiKey = APIKeys.googleAPIKey
@@ -55,7 +55,3 @@ class APIManager {
     }
 }
 
-struct BooksAPIResponse: Codable {
-    let items: [Book]?
-    let totalItems: Int?
-}
