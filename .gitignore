@@ -27,3 +27,6 @@ fastlane/test_output
 # Arquivos temporários
 *.swp
 *.lock
+
+# Arquivos de Configuração de Segredos
+Secrets.xcconfig
