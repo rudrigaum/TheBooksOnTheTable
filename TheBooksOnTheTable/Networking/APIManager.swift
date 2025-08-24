@@ -18,7 +18,7 @@ enum APIError: Error {
 class APIManager {
     static let shared = APIManager()
     private let baseURL = "https://www.googleapis.com/books/v1/"
-    private let apiKey = ""
+    private let apiKey = APIKeys.googleAPIKey
 
     func searchBooks(query: String, completion: @escaping (Result<[Book], APIError>) -> Void) {
         guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
