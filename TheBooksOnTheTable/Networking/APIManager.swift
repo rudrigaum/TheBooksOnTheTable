@@ -1,0 +1,61 @@
+//
+//  APIManager.swift
+//  TheBooksOnTheTable
+//
+//  Created by Rodrigo Cerqueira Reis on 23/07/25.
+//
+
+import Foundation
+
+enum APIError: Error {
+    case invalidURL
+    case noData
+    case decodingError(Error)
+    case networkError(Error)
+    case apiFailed(statusCode: Int, message: String?)
+}
+
+class APIManager {
+    static let shared = APIManager()
+    private let baseURL = "https://www.googleapis.com/books/v1/"
+    private let apiKey = ""
+
+    func searchBooks(query: String, completion: @escaping (Result<[Book], APIError>) -> Void) {
+        guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: "\(baseURL)volumes?q=\(encodedQuery)&key=\(apiKey)") else {
+            completion(.failure(.invalidURL))
+            return
+        }
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                completion(.failure(.networkError(error)))
+                return
+            }
+
+            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+                let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
+                let errorMessage = data.flatMap { String(data: $0, encoding: .utf8) }
+                completion(.failure(.apiFailed(statusCode: statusCode, message: errorMessage)))
+                return
+            }
+
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+
+            do {
+                let decodedResponse = try JSONDecoder().decode(BooksAPIResponse.self, from: data)
+                completion(.success(decodedResponse.items ?? []))
+            } catch {
+                completion(.failure(.decodingError(error)))
+            }
+        }.resume()
+    }
+}
+
+struct BooksAPIResponse: Codable {
+    let items: [Book]?
+    let totalItems: Int?
+}
