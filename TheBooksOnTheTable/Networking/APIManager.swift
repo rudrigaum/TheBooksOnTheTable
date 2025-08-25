@@ -7,16 +7,7 @@
 
 import Foundation
 
-enum APIError: Error {
-    case invalidURL
-    case noData
-    case decodingError(Error)
-    case networkError(Error)
-    case apiFailed(statusCode: Int, message: String?)
-}
-
 class APIManager: APIService {
-    static let shared = APIManager()
     private let baseURL = "https://www.googleapis.com/books/v1/"
     private let apiKey = APIKeys.googleAPIKey
 
