@@ -32,6 +32,7 @@ class BookSearchViewController: UIViewController {
     
     private func setupUI() {
         view.addSubview(searchBar)
+        searchBar.delegate = self 
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -103,3 +104,14 @@ extension BookSearchViewController: UITableViewDelegate {
     }
 }
 
+extension BookSearchViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let query = searchBar.text, !query.isEmpty else {
+            searchBar.resignFirstResponder()
+            return
+        }
+        viewModel.searchBooks(query: query)
+        searchBar.resignFirstResponder()
+    }
+}
