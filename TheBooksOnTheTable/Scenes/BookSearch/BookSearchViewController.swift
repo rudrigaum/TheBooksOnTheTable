@@ -87,11 +87,11 @@ extension BookSearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath) as? BookCell else {
+            fatalError("Could not dequeue BookCell with identifier BookCell.")
+        }
         let book = viewModel.books[indexPath.row]
-        
-        cell.textLabel?.text = book.volumeInfo?.title
-         cell.detailTextLabel?.text = book.volumeInfo?.authors?.joined(separator: ", ")
+        cell.configure(with: book)
         return cell
     }
 }
