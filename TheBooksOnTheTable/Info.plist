@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>API_Key_Config</key>
-	<string></string>
+	<string>$(GOOGLE_BOOKS_API_KEY)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

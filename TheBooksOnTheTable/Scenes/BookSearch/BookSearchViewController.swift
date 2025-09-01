@@ -53,7 +53,7 @@ class BookSearchViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "BookCell")
+        tableView.register(BookCell.self, forCellReuseIdentifier: "BookCell")
     }
     
     private func bindViewModel() {
