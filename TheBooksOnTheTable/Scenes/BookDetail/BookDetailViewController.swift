@@ -11,6 +11,7 @@ import UIKit
 class BookDetailViewController: UIViewController {
     private let viewModel: BookDetailViewModel
     private weak var coordinator: BookDetailCoordinator?
+    private let bookDetailView = BookDetailView()
     
     init(viewModel: BookDetailViewModel, coordinator: BookDetailCoordinator) {
         self.viewModel = viewModel
@@ -22,16 +23,12 @@ class BookDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented. This controller must be instantiated via dependency injection.")
     }
 
-
-    let titleLabel = UILabel()
-    let authorsLabel = UILabel()
-    let descriptionTextView = UITextView()
-    let coverImageView = UIImageView()
-
+    override func loadView() {
+        self.view = bookDetailView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        setupUI()
         displayBookDetails()
     }
 
@@ -39,14 +36,13 @@ class BookDetailViewController: UIViewController {
     }
 
     private func displayBookDetails() {
-        titleLabel.text = viewModel.bookTitle
-        authorsLabel.text = viewModel.bookAuthors
-        descriptionTextView.text = viewModel.bookDescription
+        bookDetailView.configure(with: viewModel)
+        
         if let imageUrl = viewModel.bookThumbnailURL {
             DispatchQueue.global().async {
                 if let data = try? Data(contentsOf: imageUrl) {
                     DispatchQueue.main.async {
-                        self.coverImageView.image = UIImage(data: data)
+                        self.bookDetailView.coverImageView.image = UIImage(data: data)
                     }
                 }
             }

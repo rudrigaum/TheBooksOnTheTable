@@ -9,7 +9,7 @@ import Foundation
 
 class BookDetailViewModel {
     let book: Book
-
+    
     init(book: Book) {
         self.book = book
     }
@@ -19,7 +19,8 @@ class BookDetailViewModel {
     var bookDescription: String? { return book.volumeInfo?.description }
     var bookThumbnailURL: URL? {
         if let urlString = book.volumeInfo?.imageLinks?.thumbnail {
-            return URL(string: urlString)
+            let secureUrlString = urlString.replacingOccurrences(of: "http://", with: "https://")
+            return URL(string: secureUrlString)
         }
         return nil
     }
