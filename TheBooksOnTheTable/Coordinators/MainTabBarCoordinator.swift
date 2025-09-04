@@ -11,13 +11,14 @@ import UIKit
 class MainTabBarCoordinator: Coordinator {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
-
+    
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-
+    
     func start() {
         let tabBarController = UITabBarController()
+        tabBarController.view.backgroundColor = .systemBackground
         
         let bookSearchNavigationController = UINavigationController()
         let favoritesNavigationController = UINavigationController()
@@ -30,9 +31,12 @@ class MainTabBarCoordinator: Coordinator {
         bookSearchCoordinator.start()
         favoritesCoordinator.start()
         
-        tabBarController.viewControllers = [bookSearchNavigationController, favoritesNavigationController]
+        tabBarController.viewControllers = [
+            bookSearchNavigationController,
+            favoritesNavigationController
+        ]
         
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.setViewControllers([tabBarController], animated: false)
+        navigationController.setViewControllers([tabBarController], animated: true)
     }
 }
