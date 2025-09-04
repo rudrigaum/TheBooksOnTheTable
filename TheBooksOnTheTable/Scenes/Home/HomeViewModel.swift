@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+class HomeViewModel {
+    
+    var featuredBooks: [Book] = []
+    
+    func fetchFeaturedBooks() {
+        featuredBooks = []
+    }
+}

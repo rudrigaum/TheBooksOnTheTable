@@ -18,7 +18,8 @@ class HomeCoordinator: Coordinator {
     }
 
     func start() {
-        let homeViewController = UIViewController()
+        let viewModel = HomeViewModel()
+        let homeViewController = HomeViewController(viewModel: viewModel, coordinator: self)
         homeViewController.view.backgroundColor = .white
         homeViewController.title = "featured books"
         
