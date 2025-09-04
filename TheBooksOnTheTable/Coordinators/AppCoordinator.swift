@@ -23,8 +23,8 @@ class AppCoordinator: Coordinator {
     }
 
     func start() {
-        let bookSearchCoordinator = BookSearchCoordinator(navigationController: navigationController)
-        childCoordinators.append(bookSearchCoordinator)
-        bookSearchCoordinator.start()
+        let mainTabBarCoordinator = MainTabBarCoordinator(navigationController: navigationController)
+        childCoordinators = [mainTabBarCoordinator]
+        mainTabBarCoordinator.start()
     }
 }
