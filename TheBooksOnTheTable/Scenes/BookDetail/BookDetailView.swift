@@ -32,6 +32,7 @@ class BookDetailView: UIView {
         textView.isEditable = false
         textView.isSelectable = false
         textView.backgroundColor = .clear
+        textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
