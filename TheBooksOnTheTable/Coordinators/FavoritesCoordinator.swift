@@ -14,7 +14,7 @@ class FavoritesCoordinator: Coordinator {
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.navigationController.tabBarItem = UITabBarItem(title: "Favorites", image: UIImage(systemName: "heart.fill"), tag: 1)
+        self.navigationController.tabBarItem = UITabBarItem(title: "favorites", image: UIImage(systemName: "heart.fill"), tag: 1)
     }
 
     func start() {
