@@ -14,6 +14,10 @@ protocol Coordinator: AnyObject {
     func start()
 }
 
+protocol BookDetailNavigation: AnyObject {
+    func navigateToBookDetail(book: Book)
+}
+
 class AppCoordinator: Coordinator {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []

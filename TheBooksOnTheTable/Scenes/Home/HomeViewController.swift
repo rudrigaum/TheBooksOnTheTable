@@ -10,12 +10,7 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    private var homeView: HomeView {
-        guard let view = self.view as? HomeView else {
-            fatalError("The view must be an instance of HomeView.")
-        }
-        return view
-    }
+    var homeView: HomeView!
     
     private let viewModel: HomeViewModel
     private weak var coordinator: HomeCoordinator?
@@ -31,7 +26,8 @@ class HomeViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = HomeView()
+        self.homeView = HomeView()
+        self.view = homeView
     }
     
     override func viewDidLoad() {
@@ -52,15 +48,17 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.featuredBooks.count
+        let count = viewModel.featuredBooks.count
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BookCell", for: indexPath) as? HomeBookCell else {
-            fatalError("Could not dequeue BookCell")
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeBookCell", for: indexPath) as? HomeBookCell else {
+            fatalError("Could not dequeue HomeBookCell")
         }
     
         let book = viewModel.featuredBooks[indexPath.item]
+        cell.configure(with: book)
         
         return cell
     }
@@ -68,6 +66,20 @@ extension HomeViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 
-extension HomeViewController: UICollectionViewDelegate {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let selectedBook = viewModel.featuredBooks[indexPath.item]
+        
+        coordinator?.navigateToBookDetail(book: selectedBook)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let width = (collectionView.bounds.width - 40) / 2
 
+        return CGSize(width: 80, height: 140)
+    }
 }
+

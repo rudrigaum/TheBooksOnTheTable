@@ -10,14 +10,29 @@ import UIKit
 
 class HomeView: UIView {
     
-    let collectionView: UICollectionView = {
+    private let layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        return layout
+    }()
+    
+    lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .systemBackground
         return collectionView
     }()
+    
+    private lazy var mainStackView: UIStackView = {
+         let stackView = UIStackView(arrangedSubviews: [collectionView])
+         stackView.axis = .vertical
+         stackView.translatesAutoresizingMaskIntoConstraints = false
+         return stackView
+     }()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,13 +44,14 @@ class HomeView: UIView {
     }
     
     private func setupLayout() {
-        addSubview(collectionView)
-        
+        backgroundColor = .white
+        addSubview(mainStackView)
+
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            mainStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            mainStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
         ])
     }
 }

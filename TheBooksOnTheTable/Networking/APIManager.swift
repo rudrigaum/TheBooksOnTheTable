@@ -12,7 +12,6 @@ class APIManager: APIService {
     private let apiKey = APIKeys.googleAPIKey
 
     func searchBooks(query: String, completion: @escaping (Result<[Book], APIError>) -> Void) {
-        print("API Key being used: \(apiKey)")
         guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
               let url = URL(string: "\(baseURL)volumes?q=\(encodedQuery)&key=\(apiKey)") else {
             completion(.failure(.invalidURL))
@@ -28,7 +27,6 @@ class APIManager: APIService {
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
                 let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
                 let errorMessage = data.flatMap { String(data: $0, encoding: .utf8) }
-                print("API Error: Status Code \(statusCode), Message: \(errorMessage ?? "No message")")
                 completion(.failure(.apiFailed(statusCode: statusCode, message: errorMessage)))
                 return
             }

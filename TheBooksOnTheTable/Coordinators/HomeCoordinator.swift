@@ -25,4 +25,10 @@ class HomeCoordinator: Coordinator {
         
         self.navigationController.pushViewController(homeViewController, animated: false)
     }
+    
+    func navigateToBookDetail(book: Book) {
+        let bookDetailCoordinator = BookDetailCoordinator(navigationController: navigationController, book: book)
+        childCoordinators.append(bookDetailCoordinator)
+        bookDetailCoordinator.start()
+    }
 }
